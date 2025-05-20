@@ -5,10 +5,10 @@ RESTful services
 - we have a dynamic that is important to undetand 
 - we have a client and a server
 
-!!!
+!!!pic
 - the client is the one that makes the request
 
-!!!
+!!!pic
 - the server is the one that responds to the request
 - and on the server we expose a bunch of services that the client can call
 
@@ -62,5 +62,65 @@ Main Takeaways:
 - Endpoints are URLs where clients access server resources.
 
 ok enough talking lets get to the meat of the article
+
+---
+BUILDING OUR FIRST RESTFUL SERVICE
+
+ok here is our small sever using the http module
+
+!!!code
+const http = require('http');
+const server = http.createServer((req, res) => {
+  res.write("Hello World");
+  res.end();
+});
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
+});
+
+
+- this is a simple server that responds with "Hello World" to any request
+but how can we do the same thing using express framework
+
+lets load express module
+!!!code
+const express = require('express');
+const app = express(); // create an instance of express
+const port = 3000; // define the port number
+
+
+- lets create a route that responds to any request 
+!!!code
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+and lets start the server
+!!!code
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`);
+});
+
+and here is the full server code
+!!!code
+const express = require('express');
+const app = express(); // create an instance of express
+const port = 3000; // define the port number
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`);
+});
+
+
+> we will explain what are routes later just stay with me 
+
+- now if you run this code and open your browser and type http://localhost:3000/ you will see "Hello World" in the browser
+
+GREAT SUCCESS hehe *__*
+
+Key Takeaways:
+- we now can build a small server using express framework (which is GREAT)
 
 ---
