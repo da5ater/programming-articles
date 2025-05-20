@@ -1,0 +1,66 @@
+RESTful services 
+
+- lets cut the crap and get to the point
+- RESTful services are a way to expose your data and functionality over HTTP requests 
+- we have a dynamic that is important to undetand 
+- we have a client and a server
+
+!!!
+- the client is the one that makes the request
+
+!!!
+- the server is the one that responds to the request
+- and on the server we expose a bunch of services that the client can call
+
+but how do the client talks with the server? 
+- client talks with server using HTTP requests 
+- the server responds to the client using HTTP responses
+
+ok so in our article the client is actually us in a web browser by typing a URL like this :
+http://localhost:3000/
+
+
+and the server is actually our application that is running on port 3000
+- in this section of the last article we created a dump server using the http module https://medium.com/@mohamedsocial555/node-modules-stupid-simple-7fd143cc93a2#:~:text=own%20event%20emitter-,http%20module,-is%20used%20for
+- we will be recreating it using express framework 
+
+
+but here are key information about REST services :
+
+- REST is short for Representational State Transfer
+- it's basically a set of rules for how to build this http services in the server
+- it provides a way to do CRUD operations on resources 
+
+- CRUD stands for Create, Read, Update, and Delete
+
+and standard HTTP methods are :
+- GET: used to retrieve data from the server
+- POST: used to send data to the server
+- PUT: used to update data on the server
+- DELETE: used to delete data from the server
+
+
+
+our main goal is to create a server that can respond to HTTP requests using express framework
+- express is a web framework for node.js that makes it easy to create web applications and APIs
+- it is built on top of the http module and provides a lot of features that make it easier to work with HTTP requests and responses
+
+
+one last thing is 
+lets explain this URL  **http://vidly.com/api/customers**
+- this is called the endpoint
+- a client will make a request to this endpoint to talk to the server
+- the address can start with http or https that depends on the server requirements
+- vidly.com is the domain name of the server
+- /api/customers is the resource
+
+
+Main Takeaways:
+- RESTful services let clients and servers talk using HTTP.
+- REST uses standard HTTP methods: GET, POST, PUT, DELETE.
+- Express makes building REST APIs in Node.js simple.
+- Endpoints are URLs where clients access server resources.
+
+ok enough talking lets get to the meat of the article
+
+---
