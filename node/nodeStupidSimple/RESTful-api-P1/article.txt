@@ -124,3 +124,163 @@ Key Takeaways:
 - we now can build a small server using express framework (which is GREAT)
 
 ---
+ROUTE parameters
+
+what is a route ?
+- a route is a path that the client can use to access a resource on the server
+- practically it - It is a combination of an HTTP method (GET, POST, PUT, DELETE) and a URL path.
+
+here is a set of examples of routes and it's explaination 
+
+- http://localhost:3000/api/customers -> this route will return all customers
+- http://localhost:3000/api/customers/1 -> this route will return the customer with id 1
+- http://localhost:3000/api/customers/1/orders -> this route will return all orders for the customer with id 1
+- http://localhost:3000/api/posts/2001/3 -> this route will return all post with the specified date
+
+of course it dosen't have to return every single time
+we can do all the 4 CRUD operation by using different HTTP methods [will be emphasized  later]
+
+
+so what is a route parameter ?
+A route parameter is a variable part of the URL path that can change based on the request.
+- It is defined by a colon (`:`) followed by the parameter name in the URL path.
+- For example, in the URL `/api/customers/:id`, `:id` is a route parameter that represents the ID of the customer.
+- When a client makes a request to this URL, the server can extract the value of the `id` parameter and use it to identify the specific customer being requested.
+- Route parameters are useful for creating dynamic routes that can handle different values without needing to define separate routes for each possible value.
+
+
+so this is a route that responds to a GET request to the root URL (`/`) and sends back a response with the text "Hello World!".
+
+> note that the following code is part of the small server we created in the last section
+
+!!!code
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+
+> but what if we want to create a route that responds to whatever the user types in the URL? 
+
+
+- we want to get dynamic information from the URL or endpoint 
+- and based on it we want to do something 
+- anything?? yes anything.
+
+- so for a URL with a query parameter name `shaboom` we want to respond with `boooom`
+
+!!!code 
+app.get('/api/:query', (req, res) => {
+	if(req.params.query === 'shaboom') {
+		res.send('boooom');
+	} else {
+		res.send('no boom');
+	}
+});
+
+- so if you type http://localhost:3000/api/shaboom you will get `boooom` in the browser
+
+
+takeaway here is that :
+- in the route handler function , we can set the route to be anything
+- an then inside the function we can use that information 
+
+no bueno ? lets have more examples
+
+
+let's get a specefic course by id = 1 
+!!!code
+const express = require('express');
+const app = express();
+const port = 3000;
+const courses = [
+  { id: 1, name: 'course1' },
+  { id: 2, name: 'course2' },
+  { id: 3, name: 'course3' }
+];
+
+app.get(`api/courses/1`, (req, res) => {
+		res.send(courses[0]);
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`);
+});
+
+- so if you type http://localhost:3000/api/courses/1 you will get the first course in the array
+
+- but what if we want to get the course by id dynamically ?
+- meanning the client would add anynumber in the URL and we will get it
+
+!!!code
+app.get('/api/courses/:id', (req, res) => {
+  console.log(req.params.id); // this will log the id parameter from the URL
+});
+
+- now `:id` is a route parameter that represents the ID of the course
+- when a client makes a request to this URL, the server can extract the value of the `id` parameter from `req.params.id` and use it to identify the specific course being requested.
+
+
+- so if you type http://localhost:3000/api/courses/1 you will log `1` in the console
+- and if you type http://localhost:3000/api/courses/2 you will log `2` in the console
+
+
+mmultiple parameters 
+
+- let's say we  have a blog and we want to get a post by id and the date
+
+- so the URL will look like this http://localhost:3000/api/posts/2001/3
+- notice here we want to get 2 parameters  :year and :month
+!!!code
+app.get('/api/posts/:year/:month', (req, res) => {
+  const year = req.params.year;
+  const month = req.params.month;
+  res.send(`Year: ${year}, Month: ${month}`);
+});
+
+- so if you type http://localhost:3000/api/posts/2001/3 you will get `Year: 2001, Month: 3` in the browser
+- and if you type http://localhost:3000/api/posts/2002/4 you will get `Year: 2002, Month: 4` in the browser
+
+key takeaways here are :
+- route parameters can be set by adding a colon `:` before the parameter name in the URL path
+- route parameters can be used to create dynamic routes that can handle different values without needing to define separate routes for each possible value
+- route parameters can be accessed using `req.params` object in the route handler function
+
+
+query string parameters
+
+- sometimes we need to pass additional information to the server
+- for example we may want to filter the results based on a specific criteria [name or age]]
+- so we can use query string parameters to pass this information 
+
+- query string parameters are added to the URL after a question mark `?`
+
+here is a query string parameter add it to the last example  
+
+http://localhost:3000/api/posts/2023/10/1?name=ahmed&age=20
+
+- so in English this URL means :  give me the post with id 1 and date 2023/10/1 and the name is Ahmed and the age is 20
+- so our route would look like this 
+
+app.get('/api/posts/:year/:month/:day', (req, res) => {
+		res.send(req.query); // this will log the query string parameters from the URL
+});
+
+
+- and the output would be 
+json
+{
+	"name": "ahmed",
+	"age": "20"
+}
+
+- so if you type http://localhost:3000/api/posts/2023/10/1?name=ahmed&age=20 you will get the query string parameters in the console
+
+key takeaways here are :
+- route parameters are used to extract dynamic values from the URL path
+- route parameters are defined by a colon `:` followed by the parameter name in the URL path
+- query string parameters can be used to pass additional information to the server
+- query string parameters are added to the URL after a question mark `?`
+- query string parameters can be accessed using `req.query` object in the route handler function
+
+
+---
