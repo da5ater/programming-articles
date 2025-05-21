@@ -284,3 +284,48 @@ key takeaways here are :
 
 
 ---
+handling HTTP methods
+
+ok now that we can build a small server and we can handle route parameters and query string parameters
+- lets see how we can handle different HTTP methods
+
+- ermember the 4 CRUD operations we talked about earlier
+- Create: POST
+- Read: GET
+- Update: PUT
+- Delete: DELETE
+
+lets start with get 
+- so we can use the GET method to retrieve data from the server
+- in our case we can use the GET method to retrieve a list of all cources from the server
+
+!!!code
+const express = require("express");
+const app = express();
+const PORT = 3000;
+const courses = [
+		{ id: 1, name: "course 1" },
+		{ id: 2, name: "course 2" },
+		{ id: 3, name: "course 3" },
+];
+app.get("api/cources/:id", (req, res) => {
+  return a course with the id
+	res.send(courses[id]);
+});
+
+app.listen(PORT, () => {
+	console.log(`server is running on port ${PORT}`);
+});
+
+- so if you type http://localhost:3000/api/cources/1 you will get the first course in the array
+- do not use id that is not in the courses array for now , we will discuss how to validate later 
+
+- the response will be 
+```json
+{
+	"id": 1,
+	"name": "course 1"
+}
+```
+
+POST method 
